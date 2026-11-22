@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Privacidad de Contador de Bolsillo</title>
+<meta name="description" content="Política de privacidad y seguridad de Contador de Bolsillo.">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Instrument+Sans:wght@400..700&display=swap">
+<style>
+/* Páginas del sitio: misma identidad que la app (verde billete, talón oscuro) */
+:root{--bg:#f6f7f5;--surface:#fff;--sunk:#ecefeb;--ink:#11201a;--muted:#5b6860;--line:#dfe5e0;--accent:#0c8f63;--accent-text:#0a7652;--accent-soft:#dff3ea;--accent-ink:#fff;--hero:#0f3326;--hero-ink:#f2f8f4;--hero-muted:#a8c6b8;--warn-soft:#f8e8db;
+--f-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;--f-body:"Instrument Sans","Segoe UI",Roboto,system-ui,sans-serif;color-scheme:light}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0c110f;--surface:#161d1a;--sunk:#111815;--ink:#e9f0ec;--muted:#98a9a0;--line:#27322d;--accent:#3ccf95;--accent-text:#4fd7a1;--accent-soft:#123024;--accent-ink:#04261a;--hero:#143a2c;--warn-soft:#3a2413;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0c110f;--surface:#161d1a;--sunk:#111815;--ink:#e9f0ec;--muted:#98a9a0;--line:#27322d;--accent:#3ccf95;--accent-text:#4fd7a1;--accent-soft:#123024;--accent-ink:#04261a;--hero:#143a2c;--warn-soft:#3a2413;color-scheme:dark}
+*{box-sizing:border-box}html,body{background:var(--bg)}
+body{margin:0;color:var(--ink);font:16px/1.55 var(--f-body);padding:calc(20px + env(safe-area-inset-top,0px)) max(18px,env(safe-area-inset-right,0px)) calc(32px + env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-left,0px))}
+.wrap{max-width:560px;margin:0 auto;display:grid;gap:18px}
+h1,h2,h3{font-family:var(--f-display);margin:0;letter-spacing:-.02em;text-wrap:balance}
+h1{font-size:clamp(1.8rem,8vw,2.4rem);line-height:1.1}h2{font-size:1.2rem}h3{font-size:1rem}
+p{margin:0}.muted{color:var(--muted)}.small{font-size:.88rem}
+a{color:var(--accent-text)}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;font-family:var(--f-display);font-weight:700;font-size:1.05rem}
+.brand img{width:44px;height:44px;border-radius:14px}
+.hero{background:var(--hero);color:var(--hero-ink);border-radius:26px;padding:22px 20px;display:grid;gap:12px}
+.hero .muted{color:var(--hero-muted)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:12px 20px;border-radius:14px;font-weight:700;text-decoration:none;border:1.5px solid var(--line);background:var(--surface);color:var(--ink)}
+.btn.primary{background:var(--accent);border-color:transparent;color:var(--accent-ink)}
+.hero .btn.primary{background:#3ccf95;color:#04261a}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px;display:grid;gap:10px}
+ol,ul{margin:0;padding-left:20px;display:grid;gap:8px}
+.note{background:var(--warn-soft);border-radius:14px;padding:12px 14px;font-size:.9rem}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+footer{font-size:.82rem;color:var(--muted);text-align:center}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <a class="brand" href="./"><img src="icon-192.png" alt="">Contador de Bolsillo</a>
+  <h1>Privacidad y seguridad</h1>
+  <p class="muted small">Actualizada en noviembre de 2026.</p>
+  <section class="card"><h2>En resumen</h2><ul>
+    <li>Tus datos se guardan <b>sólo en tu teléfono</b>. La app no tiene servidores, cuentas ni base de datos de usuarios.</li>
+    <li>Tu RUT y clave del SII se guardan <b>cifrados</b> y sólo se usan para entrar a <b>sii.cl</b>.</li>
+    <li>La app <b>nunca paga, declara ni envía nada</b> por ti: siempre confirmas tú en el sitio oficial.</li>
+    <li>No hay publicidad ni se venden datos.</li></ul></section>
+  <section class="card"><h2>Qué datos guarda</h2><ul>
+    <li>Tus movimientos (ventas, compras, gastos), los ajustes de tu pyme, tus empresas, la ficha de empresa y los datos de renta que escribas.</li>
+    <li>En la app de Android: tu RUT y clave tributaria, sólo si los guardas para sincronizar, y tu clave de IA si pegas una propia.</li></ul></section>
+  <section class="card"><h2>Cómo los protege</h2><ul>
+    <li>En Android, el RUT, la clave del SII y la clave de IA se cifran con AES-GCM usando el almacén seguro del teléfono (Android Keystore). La llave no sale del teléfono.</li>
+    <li>La app no permite copias de seguridad automáticas de Android, para que tus claves no se copien a otros lados.</li>
+    <li>Puedes pedir huella o bloqueo de pantalla para abrir la app.</li>
+    <li>Todas las conexiones usan HTTPS. El navegador interno sólo escribe tu clave en páginas de sii.cl.</li></ul></section>
+  <section class="card"><h2>Qué se envía y a quién</h2><ul>
+    <li><b>sii.cl:</b> tu RUT y clave, para entrar y descargar tu Registro de Compras y Ventas, igual que si lo hicieras tú en el navegador.</li>
+    <li><b>Asistente de IA:</b> tu pregunta y un resumen de montos, sin tu RUT, nombre ni clave. La IA gratuita usa servicios públicos (LLM7 o Pollinations); si pegas tu propia clave, Google o Anthropic. Cada uno tiene su propia política de privacidad.</li>
+    <li><b>Sitios oficiales</b> (Tesorería, Previred, municipalidades y otros) sólo se abren cuando tocas un botón; la app no les envía datos.</li>
+    <li><b>Actualizaciones:</b> la app consulta este sitio para saber si hay una versión nueva. No envía datos tuyos.</li></ul></section>
+  <section class="card"><h2>Permisos de Android</h2><ul>
+    <li><b>Internet:</b> conectar con sii.cl y con la IA.</li>
+    <li><b>Notificaciones:</b> recordarte el F29, la renta y la patente.</li>
+    <li><b>Huella o biometría:</b> sólo si activas el bloqueo. La huella nunca sale del teléfono.</li>
+    <li><b>Inicio del teléfono:</b> para que los recordatorios sigan después de reiniciar.</li>
+    <li><b>Instalar actualizaciones:</b> para instalar una versión nueva cuando tú lo confirmas.</li></ul></section>
+  <section class="card"><h2>Tu control</h2><ul>
+    <li>Borra tu RUT y clave cuando quieras en Cuenta → SII.</li>
+    <li>El respaldo que descargas no incluye tus claves.</li>
+    <li>Desinstalar la app (o borrar los datos del sitio en el navegador) borra todos tus datos.</li></ul></section>
+  <section class="card"><h2>Importante</h2>
+    <p>La app no pertenece al Servicio de Impuestos Internos. Los montos son estimaciones de apoyo y no reemplazan la propuesta oficial del SII ni la asesoría de un contador.</p></section>
+  <footer><a href="./">Abrir la app</a> · <a href="android.html">Descargar para Android</a></footer>
+</main>
+</body>
+</html>
