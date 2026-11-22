@@ -763,7 +763,7 @@ section.sheet>*{max-width:720px;margin-inline:auto}
         <button class="btn" id="stopBtn" type="button" hidden>Detener</button>
       </form>
       <div class="panel" id="iaUnavailable" hidden>
-        <p class="small">Para usar el asistente activa la IA en <b>Cuenta → Asistente con IA</b> con tu clave de API (Gemini tiene opción gratuita).</p>
+        <p class="small">El asistente no está disponible en este momento. Revisa tu conexión a internet e inténtalo de nuevo.</p>
         <div class="row"><button class="btn primary" type="button" data-go="ajustes">Ir a Cuenta</button></div>
       </div>
     </div>
@@ -843,8 +843,8 @@ section.sheet>*{max-width:720px;margin-inline:auto}
         <h3 class="ht"><i class="ic" data-i="lock"></i>Tus datos</h3>
         <ul class="small" style="margin:0;padding-left:18px;display:grid;gap:6px">
           <li>Tus movimientos y ajustes se guardan <b>sólo en tu teléfono</b>. Nunca los subimos a un servidor.</li><li>Para tu suscripción guardamos en nuestro registro sólo tu nombre, el nombre de tu negocio, tu WhatsApp, tu correo, un código de la app y su versión. Los pagos los procesa <b>Mercado Pago</b>: nunca vemos los datos de tu tarjeta ni de tu banco.</li>
-          <li>Tu RUT, clave del SII y clave de API se guardan <b>cifrados</b> con el almacén seguro de Android y sólo se envían a sii.cl o al proveedor de IA que elijas.</li>
-          <li>Si usas el asistente, tu pregunta y un resumen de tus montos (sin tu RUT ni nombre) se envían al servicio de IA: la <b>IA básica gratuita</b> usa servicios públicos gratuitos (LLM7 o Pollinations) y, si pegas tu propia clave, Google o Anthropic. Cada uno tiene sus propias políticas.</li>
+          <li>Tu RUT y clave del SII se guardan <b>cifrados</b> con el almacén seguro de Android y sólo se envían a sii.cl.</li>
+          <li>Si usas el asistente, tu pregunta y un resumen de tus montos (sin tu RUT ni nombre) se envían al servicio de IA: la <b>IA gratuita incluida</b> usa servicios públicos gratuitos (Pollinations o LLM7), cada uno con sus propias políticas.</li>
           <li>Puedes borrar tu RUT y clave en Cuenta, y borrar todo desinstalando la app. Haz un respaldo antes si quieres conservar tus datos.</li>
         </ul>
       </div>
@@ -912,16 +912,11 @@ section.sheet>*{max-width:720px;margin-inline:auto}
     <div class="panel web-only"><h3 class="ht"><i class="ic" data-i="cloud"></i>Datos del SII</h3><p class="small muted">En la app de Android la conexión con el SII es automática. Aquí puedes subir el archivo del Registro de Compras y Ventas.</p><div class="row"><button class="btn primary" type="button" data-go="sii">Subir archivo</button></div></div>
     </div>
     <div class="page" data-p="2">
-    <form class="panel apk-only" id="aiForm" hidden autocomplete="off">
-      <div class="spread"><h2 class="ht"><i class="ic" data-i="sparkles"></i>Asistente con IA</h2><span class="pill" id="aiState">—</span></div>
-      <p class="small muted">La app trae una <b>IA básica gratuita</b> (con límites de uso). Si quieres respuestas mejores y lectura de fotos, pega tu propia clave: <b>Gemini</b> gratis en aistudio.google.com → Get API key, o <b>Claude</b> de pago.</p>
-      <div class="grid2">
-        <label for="aiProv">Proveedor<select id="aiProv"><option value="gemini">Gemini (Google)</option><option value="claude">Claude (Anthropic)</option></select></label>
-        <label for="aiKey">Clave de API<input id="aiKey" type="password" autocomplete="off"></label>
-      </div>
-      <p class="small" id="aiCfgNote" hidden></p>
-      <div class="row"><button class="btn primary" type="submit" id="aiSave"><i class="ic" data-i="check"></i>Probar y guardar</button></div>
-    </form>
+    <div class="panel apk-only" hidden>
+      <div class="spread"><h2 class="ht"><i class="ic" data-i="sparkles"></i>Asistente con IA</h2><span class="pill good">Incluida</span></div>
+      <p class="small muted">La IA viene <b>incluida y gratis</b>, sin claves ni configuración. Responde al instante las dudas comunes y usa tus números para lo demás. Necesita internet.</p>
+      <div class="row"><button class="btn primary" type="button" data-go="ia">Abrir asistente</button></div>
+    </div>
     <div class="panel web-only"><h3 class="ht"><i class="ic" data-i="sparkles"></i>Asistente</h3><p class="small muted">Pregunta en simple y responde con tus números, sin configurar nada.</p><div class="row"><button class="btn primary" type="button" data-go="ia">Abrir asistente</button></div></div>
     </div>
     <div class="page" data-p="3">
@@ -975,11 +970,11 @@ section.sheet>*{max-width:720px;margin-inline:auto}
     <div class="hsec"><h3><i class="ic" data-i="lock"></i>En resumen</h3>
       <ul><li>Tus movimientos y claves viven <b>sólo en tu teléfono</b>. Para la suscripción sólo registramos tu nombre, negocio, WhatsApp y correo.</li><li>Tu RUT y clave del SII se guardan <b>cifrados</b> y sólo se usan en <b>sii.cl</b>.</li><li>La app <b>nunca paga, declara ni envía nada</b> por ti: siempre confirmas tú.</li><li>No hay publicidad ni vendemos datos.</li></ul></div>
     <div class="hsec"><h3><i class="ic" data-i="shield"></i>Qué datos guarda la app</h3>
-      <ul><li>Tus movimientos (ventas, compras, gastos), ajustes de tu pyme, empresas, ficha de empresa y datos de renta que escribas.</li><li>Tu RUT y clave tributaria, sólo si los guardas para sincronizar.</li><li>Tu clave de API de IA, sólo si pegas una propia.</li></ul></div>
+      <ul><li>Tus movimientos (ventas, compras, gastos), ajustes de tu pyme, empresas, ficha de empresa y datos de renta que escribas.</li><li>Tu RUT y clave tributaria, sólo si los guardas para sincronizar.</li></ul></div>
     <div class="hsec"><h3><i class="ic" data-i="lock"></i>Cómo los protege</h3>
-      <ul><li>RUT, clave del SII y clave de API se cifran con <b>AES-GCM</b> usando el <b>almacén seguro de Android (Keystore)</b>: la llave de cifrado no sale del teléfono.</li><li>La app no permite copias de seguridad automáticas de Android, para que tus claves no se copien a otros lados.</li><li>Puedes activar el <b>bloqueo con huella</b> o el bloqueo de pantalla para abrir la app (Cuenta → Más).</li><li>Las conexiones son sólo por <b>HTTPS</b>. El navegador interno sólo escribe tu clave en páginas de <b>sii.cl</b>.</li></ul></div>
+      <ul><li>RUT y clave del SII se cifran con <b>AES-GCM</b> usando el <b>almacén seguro de Android (Keystore)</b>: la llave de cifrado no sale del teléfono.</li><li>La app no permite copias de seguridad automáticas de Android, para que tus claves no se copien a otros lados.</li><li>Puedes activar el <b>bloqueo con huella</b> o el bloqueo de pantalla para abrir la app (Cuenta → Más).</li><li>Las conexiones son sólo por <b>HTTPS</b>. El navegador interno sólo escribe tu clave en páginas de <b>sii.cl</b>.</li></ul></div>
     <div class="hsec"><h3><i class="ic" data-i="send"></i>Qué se envía y a quién</h3>
-      <ul><li><b>Suscripción:</b> tu nombre, negocio, WhatsApp, correo y un código de la app, a nuestro registro de planes (Google). El pago lo hace Mercado Pago; nosotros sólo recibimos el aviso de que se aprobó.</li><li><b>sii.cl:</b> tu RUT y clave, para entrar y descargar tu Registro de Compras y Ventas, igual que si lo hicieras tú en el navegador.</li><li><b>Asistente de IA:</b> tu pregunta y un resumen de montos, <b>sin tu RUT, nombre ni clave</b>. La IA gratuita usa servicios públicos (LLM7 o Pollinations); con tu propia clave, Google o Anthropic. Cada uno tiene su propia política.</li><li><b>Sitios oficiales</b> (Tesorería, Previred, municipalidad, etc.) sólo se abren cuando tú tocas un botón; la app no les envía datos.</li></ul></div>
+      <ul><li><b>Suscripción:</b> tu nombre, negocio, WhatsApp, correo y un código de la app, a nuestro registro de planes (Google). El pago lo hace Mercado Pago; nosotros sólo recibimos el aviso de que se aprobó.</li><li><b>sii.cl:</b> tu RUT y clave, para entrar y descargar tu Registro de Compras y Ventas, igual que si lo hicieras tú en el navegador.</li><li><b>Asistente de IA:</b> tu pregunta y un resumen de montos, <b>sin tu RUT, nombre ni clave</b>. La IA gratuita incluida usa servicios públicos (Pollinations o LLM7), cada uno con su propia política.</li><li><b>Sitios oficiales</b> (Tesorería, Previred, municipalidad, etc.) sólo se abren cuando tú tocas un botón; la app no les envía datos.</li></ul></div>
     <div class="hsec"><h3><i class="ic" data-i="refresh"></i>Sincronización en segundo plano</h3>
       <p>Si activas "Sincronizar sola", al abrir la app un navegador oculto entra a sii.cl con tus datos guardados, como máximo cada 30 minutos. No resuelve verificaciones ni captchas: si el SII pide algo más, se detiene y te avisa para que entres tú.</p></div>
     <div class="hsec"><h3><i class="ic" data-i="bell"></i>Permisos de Android</h3>
@@ -1025,7 +1020,7 @@ section.sheet>*{max-width:720px;margin-inline:auto}
     <button type="button" data-dhelp="seg"><i class="ic" data-i="shield"></i>Política de seguridad</button>
     <button type="button" data-dgo="legal"><i class="ic" data-i="receipt"></i>Términos y privacidad</button>
   </nav>
-  <p class="small muted dver"><span id="verTxt">Contador de Bolsillo · versión 9.6</span><br><button type="button" id="updCheckBtn" class="apk-only" hidden>Buscar actualización</button></p>
+  <p class="small muted dver"><span id="verTxt">Contador de Bolsillo · versión 9.7</span><br><button type="button" id="updCheckBtn" class="apk-only" hidden>Buscar actualización</button></p>
 </aside>
 <div id="movSheet" class="welcome" hidden style="place-items:end center;background:color-mix(in srgb,var(--ink) 40%,transparent)">
   <div class="panel" style="width:100%;max-width:520px;box-shadow:var(--shadow)">
@@ -1570,7 +1565,7 @@ const FAQ = [
   {c:"app", q:"¿Cómo activo la huella para abrir la app?", a:"En Cuenta → Más, activa \"Pedir huella o bloqueo de pantalla al abrir la app\". Necesitas tener huella o bloqueo de pantalla configurado en el teléfono.", go:["ajustes","Ir a Cuenta → Más",3]},
   {c:"app", q:"Cambié de teléfono, ¿cómo paso mis datos?", a:"En el teléfono antiguo: Cuenta → Más → Descargar respaldo. En el nuevo: instala la app, toca Restaurar y elige ese archivo. Tu clave del SII no va en el respaldo: vuelve a escribirla.", go:["ajustes","Ir a Respaldo",3]},
   {c:"app", q:"¿Cómo borro mi RUT y clave del teléfono?", a:"En Cuenta → SII toca \"Borrar\". Si quieres borrar todo, desinstala la app (haz un respaldo antes si quieres conservar tus movimientos).", go:["ajustes","Ir a Cuenta → SII",1]},
-  {c:"app", q:"El asistente de IA no responde o responde mal", a:"La IA gratuita usa servicios públicos que a veces están lentos o con límite. Prueba de nuevo en unos minutos, o pega tu propia clave de Gemini (tiene opción gratis) en Cuenta → IA. Para dudas comunes, este Centro de ayuda funciona siempre, incluso sin internet.", go:["ajustes","Ir a Cuenta → IA",2]},
+  {c:"app", q:"El asistente de IA no responde o responde mal", a:"La IA viene incluida y es gratis, sin claves. El servicio gratis responde una pregunta cada 45 segundos por teléfono: si preguntas muy seguido, la app espera sola unos segundos y responde. Necesita internet. Para dudas comunes, este Centro de ayuda responde al instante, incluso sin internet.", go:["ia","Abrir el asistente"]},
   {c:"app", q:"No me llegan los recordatorios", a:"Activa los recordatorios en Cuenta → Más y permite las notificaciones cuando el teléfono pregunte. En algunos teléfonos también debes quitar el ahorro de batería para la app (Ajustes del teléfono → Aplicaciones → Contador de Bolsillo → Batería → Sin restricciones)."},
   {c:"app", q:"¿Cómo agrego el widget a la pantalla de inicio?", a:"Mantén presionado un espacio vacío de la pantalla de inicio → Widgets → Contador de Bolsillo, y arrástralo. Muestra los impuestos del mes, el vencimiento y las facturas por revisar."}
 ];
@@ -2078,22 +2073,34 @@ function nativeAsk(messages, image, mime){
 }
 // Versión web pública (GitHub Pages, sin Claude ni APK): IA básica gratis desde el navegador
 const STANDALONE = !window.claude && !window.AndroidBridge;
-async function webAsk(messages){
-  const sys = "Responde en español de Chile, claro y breve.";
-  const msgs = [{role:"system", content:sys}, ...messages.map(m=>({role:m.role, content:String(m.content)}))];
+// IA gratis incluida (sin claves): Pollinations (rápida, ~1 s) y LLM7 de respaldo.
+// El servicio gratis permite 1 respuesta cada 45 s por teléfono: si toca esperar, la app espera sola y responde.
+const iaWait = ms => new Promise(r=>setTimeout(r, ms));
+let iaUltima = 0;
+async function webAsk(messages, onStatus){
+  const sys = "Eres el asistente de Contador de Bolsillo, para pymes en Chile. Responde en español de Chile, claro, breve (máximo 6 frases) y práctico. Usa los números que te entregan; si no sabes algo, dilo y sugiere confirmarlo en sii.cl.";
+  const msgs = [{role:"system", content:sys}, ...messages.slice(-6).map(m=>({role:m.role, content:String(m.content).slice(0,6000)}))];
   const withTimeout = (p, ms) => Promise.race([p, new Promise((_,r)=>setTimeout(()=>r(new Error("timeout")), ms))]);
-  try{
-    const r = await withTimeout(fetch("https://api.llm7.io/v1/chat/completions",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer unused"},body:JSON.stringify({model:"default",messages:msgs})}), 30000);
-    if (r.ok){ const d=await r.json(); const t=d && d.choices && d.choices[0] && d.choices[0].message && d.choices[0].message.content; if (t && t.trim()) return mdClean(t.trim()); }
-  }catch{}
-  try{
-    const r = await withTimeout(fetch("https://text.pollinations.ai/",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"openai",messages:msgs})}), 45000);
-    if (r.ok){ const t=(await r.text()).trim(); if (t && !/^\s*\{\s*"(status|error)"/.test(t)) return mdClean(t); }
-    if (r.status===402 || r.status===429) throw {code:"native", message:"La IA gratis está ocupada. Espera un minuto y vuelve a preguntar, o revisa el Centro de ayuda (toca el logo)."};
-  }catch(e){ if (e && e.code) throw e; }
-  throw {code:"native", message:"No pude conectar con la IA gratis. Revisa tu internet e intenta de nuevo, o busca tu duda en el Centro de ayuda (toca el logo)."};
+  const polli = async () => {
+    const r = await withTimeout(fetch("https://text.pollinations.ai/openai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"openai-fast",messages:msgs,max_tokens:600,temperature:0.3})}), 30000);
+    const t = await r.text();
+    if (r.ok){ try{ const d=JSON.parse(t); const c=d.choices&&d.choices[0]&&d.choices[0].message&&d.choices[0].message.content; if (c && c.trim()){ iaUltima=Date.now(); return {ok:c.trim()}; } }catch{} return {err:true}; }
+    const m = t.match(/after\s+(\d+)\s*s/i); return {espera: m ? +m[1] : (r.status===402||r.status===429 ? 45 : 0)};
+  };
+  const llm7 = async () => {
+    const r = await withTimeout(fetch("https://api.llm7.io/v1/chat/completions",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer unused"},body:JSON.stringify({model:"fast",messages:msgs,max_tokens:600})}), 25000);
+    if (!r.ok) return null; const d = await r.json(); const c = d && d.choices && d.choices[0] && d.choices[0].message && d.choices[0].message.content; return c && c.trim() ? c.trim() : null;
+  };
+  let espera = 0;
+  try{ const p = await polli(); if (p.ok) return mdClean(p.ok); espera = p.espera||0; }catch{}
+  try{ const c = await llm7(); if (c) return mdClean(c); }catch{}
+  if (espera > 0 && espera <= 60){
+    for (let s=espera+1; s>0; s--){ if (onStatus) onStatus(`La IA gratis responde una pregunta cada 45 segundos. Tu respuesta llega en ${s} s…`); await iaWait(1000); }
+    try{ const p = await polli(); if (p.ok) return mdClean(p.ok); }catch{}
+  }
+  throw {code:"native", message:"No pude conectar con la IA gratis. Revisa tu internet e intenta de nuevo en un minuto, o busca tu duda en el Centro de ayuda (toca el logo)."};
 }
-const aiOn = () => !!sample || nativeAI() || STANDALONE;
+const aiOn = () => !!sample || !!AB() || STANDALONE;   // la IA gratis viene incluida, sin claves
 // ---------- Plan: 30 días gratis + suscripción (mismo sistema que Silla y Mimo) ----------
 // Licencia en el servidor (Apps Script). Los planes se pagan con Mercado Pago y se activan solos.
 const APP_V = "9.3";
@@ -2282,11 +2289,11 @@ async function ask(q){
     const input = [{role:"user", content: context() + (ref?`\nInformación verificada de la app (úsala antes que lo que creas saber):\n${ref}`:"")}, ...(recent[0].role==="assistant"?recent.slice(1):recent)];
     let text;
     if (sample) ({text} = await sample(input, {cache:false, signal:ctl.signal, onText:({text})=>{bubble.textContent=text; $("#chat").scrollTop=$("#chat").scrollHeight;}}));
-    else { text = mdClean(nativeAI() ? await nativeAsk(input) : await webAsk(input)); bubble.textContent = text; $("#chat").scrollTop=$("#chat").scrollHeight; }
+    else { text = mdClean(await webAsk(input, st=>{ bubble.textContent = st; })); bubble.textContent = text; $("#chat").scrollTop=$("#chat").scrollHeight; }
     turns.push({role:"assistant", content:text});
   }catch(e){
     if (e && e.code==="cancelled"){ bubble.textContent = e.text || "Detenido."; }
-    else if (e && e.code==="native"){ bubble.textContent = e.message || "No pude conectar con la IA. Revisa tu internet y tu clave de API en Ajustes."; }
+    else if (e && e.code==="native"){ bubble.textContent = e.message || "No pude conectar con la IA. Revisa tu internet e intenta de nuevo."; }
     else { bubble.textContent = (e && e.text ? e.text+"\n\n" : "") + errCopy(e && e.code); }
     turns.pop();
     if (e && ["not_granted","sampling_disabled","not_declared","capability_disabled","capability_removed"].includes(e.code)){ $("#askForm").hidden=true; $("#chips").hidden=true; $("#iaUnavailable").hidden=false; }
@@ -2973,7 +2980,6 @@ function renderApk(){
   const txt = last ? `Última sincronización: ${new Date(last).toLocaleString("es-CL",{day:"numeric",month:"long",hour:"2-digit",minute:"2-digit"})}` : "Todavía no sincronizas con el SII.";
   $$(".lastSync").forEach(el=>el.textContent=txt);
   try{ const has=b.hasSiiCreds(); $("#siiState").textContent = has ? "RUT y clave guardados en este teléfono" : "Sin datos guardados"; $("#siiState").className = "pill "+(has?"good":"warn"); }catch{}
-  try{ const p=JSON.parse(b.aiInfo()||"{}"); if (p.provider && p.provider!=="free") $("#aiProv").value=p.provider; $("#aiState").textContent = p.own ? `Tu clave · ${p.model}` : "IA básica gratis"; $("#aiState").className="pill "+(p.own?"good":"accent"); }catch{}
   try{ $("#remOn").checked = !!b.remindersOn(); }catch{}
   try{ $("#autoSync").checked = !!(b.autoSyncOn && b.autoSyncOn()); }catch{}
   try{ $("#lockOn").checked = !!(b.lockOn && b.lockOn()); }catch{}
@@ -3003,18 +3009,12 @@ function bindApk(){
     toast(ok ? "Guardado cifrado en este teléfono" : "No se pudo guardar"); renderApk();
   });
   $("#siiForget").addEventListener("click", ()=>{ b.clearSiiCreds(); $("#siiRut").value=""; toast("RUT y clave borrados del teléfono"); renderApk(); });
-  $("#aiForm").addEventListener("submit", e=>{
-    e.preventDefault();
-    const key=$("#aiKey").value.trim(); if(!key){ toast("Pega tu clave de API."); return; }
-    $("#aiSave").disabled=true; $("#aiCfgNote").hidden=false; $("#aiCfgNote").textContent="Probando la clave…";
-    b.saveAi($("#aiProv").value, key); $("#aiKey").value="";
-  });
   $("#lockOn").addEventListener("change", e=>{ let ok=false; try{ ok=b.setLock(e.target.checked); }catch{} if (e.target.checked && !ok){ e.target.checked=false; toast("Este teléfono no tiene huella ni bloqueo de pantalla configurado."); } else toast(e.target.checked?"La app pedirá tu huella al abrir":"Bloqueo desactivado"); });
   $("#autoSync").addEventListener("change", e=>{ try{ b.setAutoSync(e.target.checked); }catch{} toast(e.target.checked?"Sincronización automática activada":"Sincronización automática desactivada"); });
   $("#remOn").addEventListener("change", e=>{ b.setReminders(e.target.checked); toast(e.target.checked?"Recordatorios activados":"Recordatorios desactivados"); });
 }
 function initAI(){
-  if (sample || nativeAI() || STANDALONE){
+  if (aiOn()){
     $("#askForm").hidden=false; $("#chips").hidden=false; $("#iaUnavailable").hidden=true;
     $("#iaState").textContent="Listo"; $("#iaState").className="pill good";
     if (nativeAI()) $("#photoPillWrap").hidden=false;
