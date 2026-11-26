@@ -389,6 +389,14 @@ section.sheet>*{max-width:720px;margin-inline:auto}
 .upd.plan{background:var(--surface);border-color:var(--line)}
 .upd.plan .av{background:var(--copper-soft);color:var(--copper)}
 .ppcard{display:grid;gap:10px}
+.erut-card{display:grid;gap:4px;justify-items:start;padding:16px;border-radius:16px;background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent)}
+.erut-card small{color:var(--muted);font-weight:700}
+.erut-card b{font-family:var(--f-mono);font-size:1.6rem;letter-spacing:.02em}
+.erut-img{width:100%;border-radius:12px;border:1px solid var(--line)}
+.incl{display:grid;gap:6px;padding:12px;border-radius:12px;background:var(--sunk)}
+.incl b{font-size:.85rem}
+.incl span{display:flex;gap:8px;align-items:center;font-size:.86rem}
+.incl .ic{color:var(--good);width:18px;height:18px;flex:none}
 .guia{position:fixed;inset:0;z-index:9500}
 .guia[hidden]{display:none}
 .guia.centro{background:rgba(0,0,0,.62)}
@@ -681,10 +689,11 @@ section.sheet>*{max-width:720px;margin-inline:auto}
     <div class="panel">
       <div class="spread"><h2 class="ht"><i class="ic" data-i="receipt"></i><span id="f29Title">F29</span></h2><span class="pill accent" id="f29Due">—</span></div>
       <div class="lines" id="f29Lines"></div>
-      <div class="row"><button class="btn primary" id="payBtn" type="button"><i class="ic" data-i="card"></i>Declarar y pagar en el SII</button><button class="btn" id="shareBtn" type="button"><i class="ic" data-i="send"></i>Compartir resumen</button></div>
+      <div class="row"><button class="btn primary" id="payBtn" type="button"><i class="ic" data-i="card"></i>Pagar F29 en la app</button><button class="btn" id="shareBtn" type="button"><i class="ic" data-i="send"></i>Compartir resumen</button></div>
       <div class="row"><button class="btn" id="paidBtn" type="button"><i class="ic" data-i="check"></i><span id="paidTxt">Marcar como pagado</span></button></div>
       <p class="small muted">La app te lleva al formulario del SII; el pago lo haces tú con tu banco. Nunca toca tu dinero.</p>
     </div>
+    <div class="notice info apk-only" hidden><b>Paga sin salir de la app.</b> Te llevamos directo a tu F29 en el SII con tu sesión. Revisas, envías y pagas con tu banco aquí mismo (Pago en Línea). Cuando el banco muestra el comprobante, la app marca el F29 como pagado sola y guarda el folio. Tú siempre confirmas el pago.</div>
     <div class="panel" id="payGuide">
       <h3 class="ht"><i class="ic" data-i="help"></i>Cómo declarar y pagar, paso a paso</h3>
       <div id="paySimple" class="notice info" hidden></div>
@@ -817,6 +826,13 @@ section.sheet>*{max-width:720px;margin-inline:auto}
   <div id="bloqueo" class="bloqueo" hidden role="dialog" aria-modal="true" aria-labelledby="blqT">
     <div class="bloqueo-in"><i class="ic" data-i="lock"></i><h2 id="blqT">Contador de Bolsillo está en pausa</h2><p id="blqP">Tus movimientos y ajustes están guardados; paga tu plan para seguir usándola.</p><div class="panel" id="bloqueoBox"></div><button class="btn" type="button" data-plbackup style="width:100%"><i class="ic" data-i="download"></i>Descargar respaldo</button></div>
   </div>
+  <!-- MI e-RUT -->
+  <section class="view sheet" data-view="erut" data-title="Mi e-RUT" hidden>
+    <div class="sheetbody">
+      <div class="panel" id="erutBox" style="display:grid;gap:12px"></div>
+      <p class="small muted">El e-RUT (Cédula RUT electrónica) lo entrega gratis el SII. La foto se guarda sólo en este teléfono.</p>
+    </div>
+  </section>
   <!-- FACTURAS POR PAGAR -->
   <section class="view sheet" data-view="porpagar" data-title="Facturas por pagar" hidden>
     <div class="sheetbody">
@@ -933,7 +949,7 @@ section.sheet>*{max-width:720px;margin-inline:auto}
     </div>
     <div class="panel apk-only" id="remPanel" hidden>
       <h2 class="ht"><i class="ic" data-i="bell"></i>Recordatorios</h2>
-      <label class="check" for="remOn"><input type="checkbox" id="remOn"> Avisarme del F29 (5 días antes y el día anterior al vencimiento, con el monto), la renta en abril, la patente en enero y julio, y las cotizaciones si tengo trabajadores.</label>
+      <label class="check" for="remOn"><input type="checkbox" id="remOn"> Avisarme del F29 (5 días antes y el día anterior al vencimiento, con el monto), un resumen diario de cómo va el IVA del mes, la renta en abril, la patente en enero y julio, y las cotizaciones si tengo trabajadores.</label>
     </div>
     <div class="panel">
       <h3 class="ht"><i class="ic" data-i="shield"></i>Respaldo</h3>
@@ -1001,6 +1017,7 @@ section.sheet>*{max-width:720px;margin-inline:auto}
     <button type="button" data-dgo="resumen" data-dpage="1"><i class="ic" data-i="list"></i>Movimientos</button>
     <button type="button" data-dgo="f29"><i class="ic" data-i="receipt"></i>Impuestos del mes</button>
     <button type="button" data-dgo="porpagar"><i class="ic" data-i="card"></i>Facturas por pagar</button>
+    <button type="button" data-dgo="erut"><i class="ic" data-i="user"></i>Mi e-RUT</button>
     <button type="button" data-dgo="resumen" data-dpage="2"><i class="ic" data-i="up"></i>Renta</button>
     <button type="button" data-dgo="empresas"><i class="ic" data-i="building"></i>Tus empresas</button>
     <button type="button" data-dgo="renta"><i class="ic" data-i="up"></i>Renta anual</button>
@@ -1020,7 +1037,7 @@ section.sheet>*{max-width:720px;margin-inline:auto}
     <button type="button" data-dhelp="seg"><i class="ic" data-i="shield"></i>Política de seguridad</button>
     <button type="button" data-dgo="legal"><i class="ic" data-i="receipt"></i>Términos y privacidad</button>
   </nav>
-  <p class="small muted dver"><span id="verTxt">Contador de Bolsillo · versión 9.7</span><br><button type="button" id="updCheckBtn" class="apk-only" hidden>Buscar actualización</button></p>
+  <p class="small muted dver"><span id="verTxt">Contador de Bolsillo · versión 9.8</span><br><button type="button" id="updCheckBtn" class="apk-only" hidden>Buscar actualización</button></p>
 </aside>
 <div id="movSheet" class="welcome" hidden style="place-items:end center;background:color-mix(in srgb,var(--ink) 40%,transparent)">
   <div class="panel" style="width:100%;max-width:520px;box-shadow:var(--shadow)">
@@ -1423,7 +1440,7 @@ function render(){
   renderCompanies();
   $("#monthSel").value = S.month;
   const ml = monthName(S.month); $("#monthLabel").textContent = ml.charAt(0).toUpperCase()+ml.slice(1);
-  renderResumen(); renderUpcoming(); renderHomeMovs(); renderMovs(); renderF29(); renderRenta(); renderFijos(); renderCalendario(); renderAtajos(); renderPlan(); renderPorPagar(); renderEmpresa(); renderPatente(); renderCfg(); renderApk(); renderDock(); pushSummary();
+  renderResumen(); renderUpcoming(); renderHomeMovs(); renderMovs(); renderF29(); renderRenta(); renderFijos(); renderCalendario(); renderAtajos(); renderPlan(); renderPorPagar(); renderErut(); renderEmpresa(); renderPatente(); renderCfg(); renderApk(); renderDock(); pushSummary();
   hydrateIcons();
 }
 function renderResumen(){
@@ -2199,6 +2216,7 @@ function planHTML(){
     <p class="hint seguro">🔒 Pago seguro con Mercado Pago · tu plan se activa solo</p>
     <div class="prow"><button class="btn sm" type="button" data-plop>Ya pagué y no se activó</button><button class="btn sm" type="button" data-plcheck>${icon("refresh")}Revisar mi plan</button></div>
     <div class="pop" hidden><label>N° de operación de Mercado Pago<input id="pgOp" inputmode="numeric" placeholder="Ej: 123456789012"></label><p class="hint">Lo encuentras en el comprobante que te llegó al correo o en tu actividad de Mercado Pago.</p><button class="btn primary sm" type="button" data-plsend>Revisar pago</button></div>
+    <div class="incl"><b>Incluye</b>${["Declaración y pago mensual (F29) guiado","Monitoreo diario de IVA","Historial de facturas y boletas","Facturas por pagar con aviso","Asistente con IA","Tu e-RUT siempre disponible","Varias empresas con un solo plan"].map(x=>`<span>${icon("check")}${x}</span>`).join("")}</div>
     <p class="hint">Tu ID: ${esc(L.id)}</p>`;
 }
 function pintarPlanBox(el){ if (!el) return; el.innerHTML = planHTML(); hydrateIcons(el); }
@@ -2372,6 +2390,7 @@ function show(v){
   if (v==="ajustes" && window.__accPager) requestAnimationFrame(()=>{ window.__accPager.refresh(); window.__accPager.go(window.__accPager.cur,false); });
   document.body.classList.add("locked");
   if (v==="porpagar") renderPorPagar();
+  if (v==="erut") renderErut();
 }
 function closeTop(){
   const v = sheetStack.pop(); if (v){ const el=$(`section[data-view="${v}"]`); if (el) el.hidden=true; }
@@ -2450,7 +2469,8 @@ function bind(){
     S.empresa = {...S.empresa}; store.saveEmpresa(); render(); toast(S.empresa.paid[k] ? "Marcado como pagado ✓" : "Desmarcado");
   });
   $("#payBtn").addEventListener("click", ()=>{
-    const b=AB();
+    const b=AB(), k=S.month, tot=Math.round(f29(k).total);
+    if (b && typeof b.openSiiPayMonto==="function"){ toast("Abriendo tu F29 en el SII…"); b.openSiiPayMonto(clp(tot), k); return; }
     if (b && typeof b.openSiiPay==="function"){ b.openSiiPay(); return; }
     window.open("https://www.sii.cl", "_blank", "noopener");
     toast("En sii.cl: Servicios online → Impuestos mensuales → Declarar IVA (F29)");
@@ -2488,7 +2508,7 @@ function bind(){
   window.__drawerOpen = () => drawer.classList.contains("open");
   window.__closeDrawer = closeDrawer;
   $("#menuBtn").addEventListener("click", openDrawer);
-  bindPlan(); bindPorPagar(); bindGuia();
+  bindPlan(); bindPorPagar(); bindGuia(); bindErut();
   $("#updGo").addEventListener("click", ()=>{ const b=AB(); if (!b || !b.updateInstall) return; $("#updGo").disabled=true; $("#updGo").lastChild.textContent="Descargando…"; $("#updBarWrap").hidden=false; $("#updBar").style.width="2%"; b.updateInstall(); });
   $("#updLater").addEventListener("click", ()=>{ $("#updCard").hidden=true; window.__updForce=false; updSesionOculta=true; });
   $("#updCheckBtn").addEventListener("click", ()=>{ closeDrawer(); window.__updForce=true; toast("Buscando actualización…"); maybeUpdateCheck(true); });
@@ -2753,6 +2773,40 @@ function bindGuia(){
   window.__guia = () => { let v=""; try{ v=localStorage.getItem(LS_KEY+"-guia")||""; }catch{} if (!v && $("#welcome").hidden) abrirGuia(); };
 }
 
+// ---------- Mi e-RUT: siempre a mano, incluso sin internet ----------
+// Guarda en el teléfono una foto o captura de tu Cédula RUT electrónica (e-RUT) por empresa.
+const ERUT_SII = "https://www.sii.cl/portales/e_rut/e_rut.html";
+const erutKey = () => LS_KEY + "-erut-" + S.active;
+function erutGet(){ try{ return JSON.parse(localStorage.getItem(erutKey())||"null"); }catch{ return null; } }
+function renderErut(){
+  const box = $("#erutBox"); if (!box) return;
+  const co = activeCo(), e = erutGet();
+  box.innerHTML = `<div class="erut-card"><small>Cédula RUT · ${esc(co.nombre||S.config.nombre||"Mi pyme")}</small>${co.rut?`<b>${esc(co.rut)}</b>`:`<span style="font-weight:700">Todavía sin RUT</span>`}${co.rut?`<button class="btn sm" type="button" data-erutcopy>${icon("copy")}Copiar RUT</button>`:`<p class="small" style="margin:0">Conecta tu cuenta del SII o escribe el RUT en Cuenta → Tu pyme.</p>`}</div>
+    ${e ? `<img class="erut-img" src="${e.img}" alt="Tu e-RUT guardado"><p class="small muted" style="margin:0">Guardado el ${esc(e.fecha)}. Muéstralo cuando te lo pidan (bancos, proveedores, municipalidad).</p>` : `<p class="small muted" style="margin:0">Todavía no guardas tu e-RUT. Descárgalo del SII, sácale una captura o foto y súbelo aquí: queda guardado en este teléfono y lo ves aunque no tengas internet.</p>`}
+    <div class="row"><label class="btn primary sm" style="cursor:pointer">${icon("camera")}${e?"Cambiar foto":"Subir foto o captura"}<input type="file" accept="image/*" id="erutIn" hidden></label><button class="btn sm" type="button" data-erutsii>${icon("ext")}Descargar del SII</button>${e?`<button class="btn sm ghost" type="button" data-erutdel>Quitar</button>`:""}</div>`;
+  hydrateIcons(box);
+}
+function erutGuardar(file){
+  const fr = new FileReader();
+  fr.onload = () => { const img = new Image(); img.onload = () => {
+      const max = 1400, k = Math.min(1, max/Math.max(img.width, img.height)), c = document.createElement("canvas");
+      c.width = Math.round(img.width*k); c.height = Math.round(img.height*k); c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+      const data = c.toDataURL("image/jpeg", 0.82);
+      try{ localStorage.setItem(erutKey(), JSON.stringify({img:data, fecha: new Date().toLocaleDateString("es-CL")})); toast("e-RUT guardado en este teléfono"); }
+      catch{ toast("No se pudo guardar: la imagen es muy grande"); }
+      renderErut();
+    }; img.src = fr.result; };
+  fr.readAsDataURL(file);
+}
+function bindErut(){
+  document.addEventListener("change", e=>{ if (e.target.id==="erutIn" && e.target.files[0]){ erutGuardar(e.target.files[0]); e.target.value=""; } });
+  document.addEventListener("click", e=>{
+    if (e.target.closest("[data-erutsii]")){ const b=AB(); if (b && typeof b.openUrl==="function") b.openUrl(ERUT_SII); else window.open(ERUT_SII, "_blank", "noopener"); }
+    else if (e.target.closest("[data-erutcopy]")){ const r = activeCo().rut||""; try{ navigator.clipboard.writeText(r).then(()=>toast("RUT copiado"), ()=>toast(r)); }catch{ toast(r); } }
+    else if (e.target.closest("[data-erutdel]")){ try{ localStorage.removeItem(erutKey()); }catch{} renderErut(); toast("e-RUT quitado"); }
+  });
+}
+
 // ---------- Facturas por pagar ----------
 // Cada factura de compra nueva que llega del SII (arriendo, proveedores…) queda "por pagar"
 // hasta que la marcas como pagada. Al sincronizar, la app avisa con el N° de factura y el monto.
@@ -2857,6 +2911,17 @@ window.onSiiName = (rut, nombre) => {
   store.saveCompanies(); render(); return "ok";
 };
 window.onSiiCompany = (rut, nombre) => { const co = ensureCompany(rut, String(nombre||"").trim()); render(); return co ? co.id : ""; };
+// El pago del F29 se hizo dentro de la app: la página del SII o del banco mostró el comprobante.
+window.onSiiF29Pagado = (rut, info) => {
+  const [k0, folio] = String(info||"").split("|"); const k = /^\d{4}-\d{2}$/.test(k0) ? k0 : S.month;
+  const co = rut ? ensureCompany(rut, "") : activeCo(); const e = dataOf(co.id).empresa;
+  e.paid = e.paid || {}; e.paid[k] = new Date().toISOString();
+  if (folio) { e.folios = e.folios || {}; e.folios[k] = folio; try{ localStorage.setItem(LS_KEY+"-folio-"+co.id+"-"+k, folio); }catch{} }
+  if (co.id===S.active) S.empresa = {...S.empresa, paid: e.paid};
+  store.saveEmpresa(co.id); render();
+  toast(`F29 de ${monthName(k)} pagado ✓${folio?` · folio ${folio}`:""}`);
+  return "ok";
+};
 window.onSiiPending = (rut, n) => { const co = ensureCompany(rut, ""); if (co){ co.pend = Number(n)||0; co.pendAt = new Date().toISOString(); store.saveCompanies(); render(); } return "ok"; };
 window.onSiiCsv = (text, rut) => {
   try{
@@ -2968,7 +3033,8 @@ function pushSummary(){
   const d = new Date(today.getFullYear(), today.getMonth()-1, 1);
   const k = `${d.getFullYear()}-${pad(d.getMonth()+1)}`; const f = f29(k);
   const due = dueDate(k), co = activeCo();
-  try{ b.setSummary(JSON.stringify({mes: monthName(k), total: Math.round(f.total), hayDatos: (S.months[k]||[]).length>0, vence: fmtDay(due), empresa: co.nombre||co.rut||"Mi pyme", pend: co.pend||0, dia: dueDate(k).getDate(), trab: Number(S.config.trab)||0, pagado: !!(S.empresa.paid||{})[k], patPagada: !!patInfo().paid, patComuna: patInfo().comuna})); }catch{}
+  const kc = `${today.getFullYear()}-${pad(today.getMonth()+1)}`, fc = f29(kc);
+  try{ b.setSummary(JSON.stringify({ivaMes: MES[today.getMonth()], ivaDeb: Math.round(fc.debito||0), ivaCred: Math.round(fc.credito||0), ivaPagar: Math.round(fc.ivaPagar||0), ivaDatos: (S.months[kc]||[]).length>0, mes: monthName(k), total: Math.round(f.total), hayDatos: (S.months[k]||[]).length>0, vence: fmtDay(due), empresa: co.nombre||co.rut||"Mi pyme", pend: co.pend||0, dia: dueDate(k).getDate(), trab: Number(S.config.trab)||0, pagado: !!(S.empresa.paid||{})[k], patPagada: !!patInfo().paid, patComuna: patInfo().comuna})); }catch{}
 }
 function renderApk(){
   const b = AB(); const on = !!(b && typeof b.openSii==="function");
