@@ -389,6 +389,15 @@ section.sheet>*{max-width:720px;margin-inline:auto}
 .upd.plan{background:var(--surface);border-color:var(--line)}
 .upd.plan .av{background:var(--copper-soft);color:var(--copper)}
 .ppcard{display:grid;gap:10px}
+.payhome-btn{width:100%;display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:var(--r);border:0;cursor:pointer;text-align:left;font:inherit;color:var(--accent-ink);background-color:var(--accent);background-image:var(--tex);box-shadow:0 8px 22px color-mix(in srgb,var(--accent) 30%,transparent)}
+.payhome-btn.soon{background:var(--warn);color:#fff}
+.payhome-btn.late{background:var(--bad);color:#fff}
+.payhome-btn .ph-ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.18);flex:none}
+.payhome-btn .ph-tx{flex:1;min-width:0;display:grid;gap:2px}
+.payhome-btn b{font-family:var(--f-display);font-size:1.05rem}
+.payhome-btn small{opacity:.9;font-size:.8rem}
+.payhome-ok{display:flex;gap:8px;align-items:center;margin:0;padding:10px 14px;border-radius:var(--r-s);background:var(--good-soft);color:var(--good);font-weight:700;font-size:.88rem}
+.payhome-ok .ic{width:18px;height:18px;flex:none}
 .erut-card{display:grid;gap:4px;justify-items:start;padding:16px;border-radius:16px;background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent)}
 .erut-card small{color:var(--muted);font-weight:700}
 .erut-card b{font-family:var(--f-mono);font-size:1.6rem;letter-spacing:.02em}
@@ -524,6 +533,10 @@ section.sheet>*{max-width:720px;margin-inline:auto}
         <span class="sub" id="heroSub"></span>
         <span class="hero-foot"><span>Ver detalle y cómo pagar</span><i class="ic" data-i="right"></i></span>
       </button>
+      <div id="payHome" hidden>
+        <button class="payhome-btn" type="button" id="payHomeBtn"><span class="ph-ic"><i class="ic" data-i="card"></i></span><span class="ph-tx"><b id="payHomeT">Pagar impuestos</b><small id="payHomeS"></small></span><i class="ic" data-i="right"></i></button>
+        <p class="payhome-ok" id="payHomeOk" hidden></p>
+      </div>
       <div class="flow">
         <div class="duo" id="monthStats"></div>
         <div class="trend" id="trend" hidden></div>
@@ -1037,7 +1050,7 @@ section.sheet>*{max-width:720px;margin-inline:auto}
     <button type="button" data-dhelp="seg"><i class="ic" data-i="shield"></i>Política de seguridad</button>
     <button type="button" data-dgo="legal"><i class="ic" data-i="receipt"></i>Términos y privacidad</button>
   </nav>
-  <p class="small muted dver"><span id="verTxt">Contador de Bolsillo · versión 9.8</span><br><button type="button" id="updCheckBtn" class="apk-only" hidden>Buscar actualización</button></p>
+  <p class="small muted dver"><span id="verTxt">Contador de Bolsillo · versión 9.9</span><br><button type="button" id="updCheckBtn" class="apk-only" hidden>Buscar actualización</button></p>
 </aside>
 <div id="movSheet" class="welcome" hidden style="place-items:end center;background:color-mix(in srgb,var(--ink) 40%,transparent)">
   <div class="panel" style="width:100%;max-width:520px;box-shadow:var(--shadow)">
@@ -1443,6 +1456,23 @@ function render(){
   renderResumen(); renderUpcoming(); renderHomeMovs(); renderMovs(); renderF29(); renderRenta(); renderFijos(); renderCalendario(); renderAtajos(); renderPlan(); renderPorPagar(); renderErut(); renderEmpresa(); renderPatente(); renderCfg(); renderApk(); renderDock(); pushSummary();
   hydrateIcons();
 }
+// Botón grande en el inicio para pagar el F29 que toca ahora (el del mes anterior)
+function renderPayHome(){
+  const box=$("#payHome"); if (!box) return;
+  const p=new Date(today.getFullYear(), today.getMonth()-1, 1), k=`${p.getFullYear()}-${pad(p.getMonth()+1)}`;
+  const hay=(S.months[k]||[]).length>0, pagado=!!(S.empresa.paid||{})[k], f=f29(k), mes=MES[p.getMonth()], due=dueDate(k);
+  const dias=Math.round((new Date(due.getFullYear(),due.getMonth(),due.getDate())-new Date(today.getFullYear(),today.getMonth(),today.getDate()))/86400000);
+  const btn=$("#payHomeBtn");
+  if (pagado){
+    box.hidden=false; btn.hidden=true;
+    $("#payHomeOk").hidden=false; $("#payHomeOk").innerHTML=`${icon("check")}<span>Impuestos de ${mes} pagados. Los de ${MES[today.getMonth()]} se pagan en ${MES[(today.getMonth()+1)%12]}.</span>`; hydrateIcons(box); return;
+  }
+  if (!hay){ box.hidden=true; return; }
+  box.hidden=false; $("#payHomeOk").hidden=true; btn.hidden=false; btn.dataset.k=k;
+  btn.className="payhome-btn"+(dias<0?" late":dias<=5?" soon":"");
+  $("#payHomeT").textContent = f.total>0 ? `Pagar impuestos de ${mes} · ${clp(f.total)}` : `Declarar F29 de ${mes} (sin pago)`;
+  $("#payHomeS").textContent = (dias<0?`Venció el ${fmtDay(due)} · págalo lo antes posible`: dias===0?"Vence hoy":`Vence el ${fmtDay(due)}${dias<=5?` · quedan ${dias} día${dias===1?"":"s"}`:""}`) + " · sin salir de la app";
+}
 function renderResumen(){
   const k=S.month, f=f29(k), due=dueText(k);
   $("#heroLabel").textContent = `Impuestos de ${monthName(k).split(" ")[0]}`;
@@ -1463,6 +1493,7 @@ function renderResumen(){
     <div class="tbars" role="img" aria-label="Ingresos y gastos de los últimos 6 meses">${tv.map(x=>`<div class="tcol${x.k===k?" now":""}" title="${esc(monthName(x.k))}: ingresos ${clp(x.v)}, gastos ${clp(x.g)}"><i style="height:${x.v?Math.max(4,Math.round(100*x.v/tmax)):0}%"></i><i style="height:${x.g?Math.max(4,Math.round(100*x.g/tmax)):0}%"></i></div>`).join("")}</div>
     <div class="tlabels">${tv.map(x=>`<span class="${x.k===k?"now":""}">${MES[Number(x.k.slice(5))-1].slice(0,3)}</span>`).join("")}</div>`;
   const dp=$("#duePill"); dp.textContent=due.txt; dp.className="pill "+due.cls;
+  renderPayHome();
   $("#monthStats").innerHTML = [
     ["arrowin","Ingresos", clp(f.ventasTotal)],
     ["arrowout","Gastos", clp(f.comprasTotal)]
@@ -1664,7 +1695,11 @@ function renderUpcoming(){
     if (nx) items.unshift({ic:"building", cls:"acc", t:"Tu pyme en camino", s:`Paso ${d+1} de ${sv.length}: ${nx.t}`, v:"", dot:"", go:"empresa"});
   }
   const co = activeCo();
-  if (co.pend > 0) items.unshift({ic:"receipt", cls:"warn", t:`${co.pend} factura${co.pend>1?"s":""} por revisar`, s:"Acepta o reclama en sii.cl dentro de 8 días", v:"", dot:"warn", go:"sii"});
+  if (co.pend > 0){
+    const hace = co.pendAt ? (()=>{ const m=Math.round((Date.now()-new Date(co.pendAt))/60000); return m<60?`hace ${Math.max(1,m)} min`:m<1440?`hace ${Math.round(m/60)} h`:`hace ${Math.round(m/1440)} días`; })() : "";
+    const docs = ppLista().filter(p=>p.desde==="pendiente").slice(0,2).map(p=>`N° ${p.folio}${p.who?" "+p.who:""}`).join(" · ");
+    items.unshift({ic:"receipt", cls:"warn", t:`${co.pend} factura${co.pend>1?"s":""} por revisar en el SII`, s:(docs?docs+" · ":"")+`Acepta o reclama dentro de 8 días${hace?` · revisado ${hace}`:""}`, v:"", dot:"warn", go:"sii"});
+  }
   { const pp = ppPendientes(); if (pp.length){ const p=pp[0];
     items.unshift(pp.length===1 ? {ic:"card", cls:"warn", t:`Factura N° ${p.folio} por pagar`, s:`${p.who||"Proveedor"} · emitida el ${fmtDay(new Date(p.fecha+"T12:00"))}`, v:clp(p.total), dot:p.visto?"warn":"bad", go:"porpagar"}
       : {ic:"card", cls:"warn", t:`${pp.length} facturas por pagar`, s:pp.slice(0,2).map(x=>`N° ${x.folio}${x.who?" "+x.who:""}`).join(" · "), v:clp(pp.reduce((a,x)=>a+(x.total||0),0)), dot:pp.some(x=>!x.visto)?"bad":"warn", go:"porpagar"}); } }
@@ -2468,13 +2503,15 @@ function bind(){
     if (S.empresa.paid[k]) delete S.empresa.paid[k]; else S.empresa.paid[k] = new Date().toISOString();
     S.empresa = {...S.empresa}; store.saveEmpresa(); render(); toast(S.empresa.paid[k] ? "Marcado como pagado ✓" : "Desmarcado");
   });
-  $("#payBtn").addEventListener("click", ()=>{
-    const b=AB(), k=S.month, tot=Math.round(f29(k).total);
+  $("#payBtn").addEventListener("click", ()=>pagarF29(S.month));
+  $("#payHomeBtn").addEventListener("click", ()=>{ const k=$("#payHomeBtn").dataset.k; if (k) pagarF29(k); });
+  function pagarF29(k){
+    const b=AB(), tot=Math.round(f29(k).total); try{ localStorage.setItem(LS_KEY+"-paying", k); }catch{}
     if (b && typeof b.openSiiPayMonto==="function"){ toast("Abriendo tu F29 en el SII…"); b.openSiiPayMonto(clp(tot), k); return; }
     if (b && typeof b.openSiiPay==="function"){ b.openSiiPay(); return; }
     window.open("https://www.sii.cl", "_blank", "noopener");
     toast("En sii.cl: Servicios online → Impuestos mensuales → Declarar IVA (F29)");
-  });
+  }
   $("#shareBtn").addEventListener("click", async ()=>{
     const t=shareText(), b=AB();
     if (b && typeof b.share==="function"){ b.share(t); return; }

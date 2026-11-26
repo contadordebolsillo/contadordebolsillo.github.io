@@ -1,7 +1,7 @@
 {
-  "code": 36,
-  "name": "9.8",
+  "code": 37,
+  "name": "9.9",
   "apk": "contador-de-bolsillo.apk",
   "mb": 0.2,
-  "notas": "• Paga tu F29 sin salir de la app: te lleva directo al formulario, pagas con tu banco aquí mismo y la app lo marca pagado sola.\n• Mi e-RUT: guarda tu Cédula RUT en la app y tenla siempre a mano, incluso sin internet.\n• Monitoreo diario de IVA: un aviso al día con cómo va el IVA del mes."
+  "notas": "• Botón grande en el inicio para pagar tus impuestos del mes (F29) sin salir de la app.\n• Facturas por revisar más exactas: ahora revisa los dos últimos meses en el SII y muestra cuándo se revisó."
 }
