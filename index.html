@@ -737,6 +737,12 @@ section.sheet>*{max-width:720px;margin-inline:auto}
       <p class="small muted" style="margin:0">¿Recién empiezas? Trae todos los meses del año de una vez, para que la Renta salga completa. Demora unos minutos, sólo la primera vez.</p>
       <div class="row"><button class="btn yearSii" type="button"><i class="ic" data-i="download"></i>Traer el año completo</button></div>
     </div>
+    <div class="panel apk-only" hidden>
+      <h2 class="ht"><i class="ic" data-i="list"></i>Comparar con el SII</h2>
+      <p class="small muted" style="margin:0">Abre tu Registro de Compras y Ventas en el SII para revisarlo con calma, sin que la app toque nada. Arriba verás estos mismos números para comparar.</p>
+      <div id="cmpBox"></div>
+      <div class="row"><button class="btn primary" type="button" data-cmp><i class="ic" data-i="ext"></i>Abrir el SII y comparar</button></div>
+    </div>
     <div class="panel">
       <h2 class="ht"><i class="ic" data-i="upload"></i>Subir archivo del SII</h2>
       <ol class="small" style="margin:0;padding-left:18px;display:grid;gap:6px">
@@ -1050,7 +1056,7 @@ section.sheet>*{max-width:720px;margin-inline:auto}
     <button type="button" data-dhelp="seg"><i class="ic" data-i="shield"></i>Política de seguridad</button>
     <button type="button" data-dgo="legal"><i class="ic" data-i="receipt"></i>Términos y privacidad</button>
   </nav>
-  <p class="small muted dver"><span id="verTxt">Contador de Bolsillo · versión 9.9</span><br><button type="button" id="updCheckBtn" class="apk-only" hidden>Buscar actualización</button></p>
+  <p class="small muted dver"><span id="verTxt">Contador de Bolsillo · versión 10.0</span><br><button type="button" id="updCheckBtn" class="apk-only" hidden>Buscar actualización</button></p>
 </aside>
 <div id="movSheet" class="welcome" hidden style="place-items:end center;background:color-mix(in srgb,var(--ink) 40%,transparent)">
   <div class="panel" style="width:100%;max-width:520px;box-shadow:var(--shadow)">
@@ -1453,7 +1459,7 @@ function render(){
   renderCompanies();
   $("#monthSel").value = S.month;
   const ml = monthName(S.month); $("#monthLabel").textContent = ml.charAt(0).toUpperCase()+ml.slice(1);
-  renderResumen(); renderUpcoming(); renderHomeMovs(); renderMovs(); renderF29(); renderRenta(); renderFijos(); renderCalendario(); renderAtajos(); renderPlan(); renderPorPagar(); renderErut(); renderEmpresa(); renderPatente(); renderCfg(); renderApk(); renderDock(); pushSummary();
+  renderResumen(); renderUpcoming(); renderHomeMovs(); renderMovs(); renderF29(); renderRenta(); renderFijos(); renderCalendario(); renderAtajos(); renderPlan(); renderPorPagar(); renderErut(); renderComparar(); renderEmpresa(); renderPatente(); renderCfg(); renderApk(); renderDock(); pushSummary();
   hydrateIcons();
 }
 // Botón grande en el inicio para pagar el F29 que toca ahora (el del mes anterior)
@@ -2843,6 +2849,27 @@ function bindErut(){
     else if (e.target.closest("[data-erutdel]")){ try{ localStorage.removeItem(erutKey()); }catch{} renderErut(); toast("e-RUT quitado"); }
   });
 }
+
+// ---------- Comparar con el SII ----------
+// Muestra los números de la app por tipo de documento (como el Resumen del Registro del SII) y abre el SII para revisarlo libre.
+function cmpDatos(k){
+  const g={compra:{}, venta:{}};
+  for (const m of S.months[k]||[]){ if (m.ejemplo || !g[m.kind]) continue; const t=DOC_LABEL[m.doc]||m.doc, x=(g[m.kind][t] ||= {n:0,neto:0,iva:0,total:0}); x.n++; x.neto+=(m.neto||0)*sign(m); x.iva+=(m.iva||0)*sign(m); x.total+=(m.total||0)*sign(m); }
+  return g;
+}
+function renderComparar(){
+  const box=$("#cmpBox"); if (!box) return;
+  const k=S.month, g=cmpDatos(k), co=activeCo();
+  const tabla=(kind,tit)=>{ const rows=Object.entries(g[kind]); if(!rows.length) return `<p class="small muted" style="margin:6px 0">${tit}: sin documentos en ${monthName(k)}.</p>`;
+    return `<div class="tablewrap"><table><thead><tr><th>${tit}</th><th class="r">Docs</th><th class="r">IVA</th><th class="r">Total</th></tr></thead><tbody>${rows.map(([t,x])=>`<tr><td>${esc(t)}</td><td class="r">${x.n}</td><td class="r">${clp(x.iva)}</td><td class="r">${clp(x.total)}</td></tr>`).join("")}</tbody></table></div>`; };
+  box.innerHTML = `<p class="small" style="margin:6px 0 2px"><b>${esc(monthName(k))}</b> · en el SII elige este mes y toca Consultar.</p>${tabla("compra","Compras")}${tabla("venta","Ventas")}<p class="small muted" style="margin:6px 0 0">Facturas por revisar (pendientes): <b>${co.pend||0}</b>${co.pendAt?` · revisado el ${new Date(co.pendAt).toLocaleString("es-CL",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})}`:""}. Las boletas y vouchers vienen del resumen del SII, por eso pueden salir como un solo documento.</p>`;
+}
+function cmpResumen(){
+  const k=S.month, f=f29(k), co=activeCo();
+  return `App · ${monthName(k)}: Compras ${clp(f.comprasTotal)} (IVA ${clp(f.credito)}) · Ventas ${clp(f.ventasTotal)} (IVA ${clp(f.debito)}) · Pendientes ${co.pend||0}`;
+}
+document.addEventListener("click", e=>{ if (!e.target.closest("[data-cmp]")) return; const b=AB();
+  if (b && typeof b.openSiiVer==="function") b.openSiiVer(cmpResumen()); else toast("Actualiza la app para usar esta opción"); });
 
 // ---------- Facturas por pagar ----------
 // Cada factura de compra nueva que llega del SII (arriendo, proveedores…) queda "por pagar"
