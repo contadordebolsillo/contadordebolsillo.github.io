@@ -389,6 +389,9 @@ section.sheet>*{max-width:720px;margin-inline:auto}
 .upd.plan{background:var(--surface);border-color:var(--line)}
 .upd.plan .av{background:var(--copper-soft);color:var(--copper)}
 .ppcard{display:grid;gap:10px}
+.cmp-link{display:flex;align-items:center;gap:8px;width:100%;margin:-4px 0 2px;padding:8px 14px;border:0;background:transparent;color:var(--muted);font:inherit;font-size:.85rem;cursor:pointer;text-align:left}
+.cmp-link b{color:var(--accent-text)}
+.cmp-link .ic{width:16px;height:16px;flex:none}
 .payhome-btn{width:100%;display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:var(--r);border:0;cursor:pointer;text-align:left;font:inherit;color:var(--accent-ink);background-color:var(--accent);background-image:var(--tex);box-shadow:0 8px 22px color-mix(in srgb,var(--accent) 30%,transparent)}
 .payhome-btn.soon{background:var(--warn);color:#fff}
 .payhome-btn.late{background:var(--bad);color:#fff}
@@ -511,6 +514,7 @@ section.sheet>*{max-width:720px;margin-inline:auto}
     <span class="txt"><b id="dockText">Datos del SII</b><small id="dockSub">Importa tus compras y ventas</small><span class="dbar" id="dockBarWrap" hidden><span id="dockBar"></span></span></span>
     <i class="ic" data-i="right"></i>
   </button>
+  <button class="cmp-link apk-only" type="button" data-cmp hidden><i class="ic" data-i="list"></i><span>¿Cuadra con el SII? <b>Comparar mis números</b></span></button>
 
   <div id="loadNote" class="notice info" hidden></div>
 
@@ -1045,6 +1049,7 @@ section.sheet>*{max-width:720px;margin-inline:auto}
     <button type="button" data-dgo="atajos"><i class="ic" data-i="link"></i>Trámites y atajos</button>
     <p class="dsec">Herramientas</p>
     <button type="button" data-dgo="sii"><i class="ic" data-i="cloud"></i>Datos del SII</button>
+    <button type="button" class="apk-only" data-cmp hidden><i class="ic" data-i="list"></i>Comparar con el SII</button>
     <button type="button" data-dgo="ia"><i class="ic" data-i="sparkles"></i>Asistente</button>
     <button type="button" data-dgo="empresa"><i class="ic" data-i="store"></i>Empresa en un Día</button>
     <p class="dsec">Cuenta</p>
@@ -2868,7 +2873,7 @@ function cmpResumen(){
   const k=S.month, f=f29(k), co=activeCo();
   return `App · ${monthName(k)}: Compras ${clp(f.comprasTotal)} (IVA ${clp(f.credito)}) · Ventas ${clp(f.ventasTotal)} (IVA ${clp(f.debito)}) · Pendientes ${co.pend||0}`;
 }
-document.addEventListener("click", e=>{ if (!e.target.closest("[data-cmp]")) return; const b=AB();
+document.addEventListener("click", e=>{ if (!e.target.closest("[data-cmp]")) return; const b=AB(); if (window.__drawerOpen && window.__drawerOpen()) window.__closeDrawer();
   if (b && typeof b.openSiiVer==="function") b.openSiiVer(cmpResumen()); else toast("Actualiza la app para usar esta opción"); });
 
 // ---------- Facturas por pagar ----------
